@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phyto Parfums - Descubra Seu Perfume Perfeito</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a56 0%, #ffad56 25%, #ffc947 50%, #ffde59 75%, #fff176 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-leaf {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.3;
+            color: #8e24aa;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 50px;
+            margin: 20px 0;
+            box-shadow: 0 25px 50px rgba(142, 36, 170, 0.15);
+            border: 2px solid rgba(142, 36, 170, 0.1);
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideIn 0.8s ease-out forwards;
+        }
+        
+        @keyframes slideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .step.hidden {
+            display: none;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            background: linear-gradient(135deg, #8e24aa 0%, #ab47bc 100%);
+            color: white;
+            padding: 30px 50px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            box-shadow: 0 15px 30px rgba(142, 36, 170, 0.3);
+            margin-bottom: 20px;
+        }
+        
+        .logo-leaf {
+            background: #9ccc65;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .logo-subtitle {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #8e24aa;
+            letter-spacing: 8px;
+            margin-top: 10px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #8e24aa;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #8e24aa;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .question {
+            font-size: 1.3rem;
+            color: #5d4037;
+            margin-bottom: 35px;
+            text-align: center;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+        
+        .options {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .options.two-columns {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .options.three-columns {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .options.single-column {
+            grid-template-columns: 1fr;
+            max-width: 500px;
+            margin: 0 auto 40px auto;
+        }
+        
+        .option {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            padding: 25px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #5d4037;
+            box-shadow: 0 10px 25px rgba(255, 193, 7, 0.2);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .option:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 193, 7, 0.3);
+            border-color: #ff9800;
+        }
+        
+        .option.selected {
+            background: linear-gradient(135deg, #8e24aa 0%, #ab47bc 100%);
+            color: white;
+            transform: scale(1.05);
+            border-color: #8e24aa;
+            box-shadow: 0 15px 35px rgba(142, 36, 170, 0.4);
+        }
+        
+        .option-emoji {
+            font-size: 1.5rem;
+            margin-right: 12px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #ff9800 0%, #ffc107 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 18px 45px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto 0;
+            box-shadow: 0 12px 25px rgba(255, 152, 0, 0.3);
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 35px rgba(255, 152, 0, 0.4);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff9800, #ffc107);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .result {
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            border-radius: 25px;
+            margin-top: 30px;
+        }
+        
+        .result h3 {
+            font-size: 2.5rem;
+            color: #2e7d32;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+        
+        .perfume-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #8e24aa;
+            text-align: left;
+        }
+        
+        .perfume-name {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #8e24aa;
+            margin-bottom: 10px;
+        }
+        
+        .perfume-inspiration {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .perfume-family {
+            font-size: 1.2rem;
+            color: #2e7d32;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .perfume-notes {
+            margin-bottom: 15px;
+        }
+        
+        .notes-section {
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .notes-label {
+            font-weight: 600;
+            color: #5d4037;
+            display: inline-block;
+            width: 80px;
+        }
+        
+        .notes-content {
+            color: #666;
+        }
+        
+        .match-percentage {
+            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .alternatives {
+            margin-top: 30px;
+        }
+        
+        .alternative-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 3px solid #ff9800;
+        }
+        
+        .alternative-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff9800;
+            margin-bottom: 5px;
+        }
+        
+        .alternative-match {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .step {
+                padding: 30px 25px;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+                padding: 20px 35px;
+            }
+            
+            .logo-subtitle {
+                font-size: 1.4rem;
+                letter-spacing: 4px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .question {
+                font-size: 1.1rem;
+            }
+            
+            .options.two-columns, .options.three-columns {
+                grid-template-columns: 1fr;
+            }
+            
+            .option {
+                padding: 20px;
+                font-size: 1rem;
+            }
+            
+            .perfume-name {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-leaf" style="top: 10%; left: 10%; animation-delay: 0s;">🍃</div>
+        <div class="floating-leaf" style="top: 20%; right: 15%; animation-delay: -2s;">🌿</div>
+        <div class="floating-leaf" style="top: 60%; left: 5%; animation-delay: -4s;">🌱</div>
+        <div class="floating-leaf" style="bottom: 20%; right: 10%; animation-delay: -1s;">🍃</div>
+        <div class="floating-leaf" style="bottom: 10%; left: 20%; animation-delay: -3s;">🌿</div>
+    </div>
+
+    <div class="container">
+        <!-- TELA INICIAL -->
+        <div class="step" id="welcome">
+            <div class="logo-container">
+                <div class="logo">
+                    <span>phyt</span>
+                    <div class="logo-leaf">🍃</div>
+                </div>
+                <div class="logo-subtitle">PARFUMS</div>
+            </div>
+            
+            <h1>Descubra Seu Perfume Perfeito</h1>
+            
+            <div class="question">
+                Olá! 🌟 Vamos encontrar a fragrância ideal para você através de algumas perguntas simples e rápidas.
+                <br><br>
+                <strong>Em apenas 3 minutos</strong>, você terá recomendações personalizadas dos nossos melhores perfumes!
+            </div>
+            
+            <button class="btn" onclick="startQuiz()">Começar Agora! 🚀</button>
+        </div>
+
+        <!-- PERGUNTA 1: PARA QUEM -->
+        <div class="step hidden" id="step1">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 16%"></div>
+            </div>
+            
+            <h2>Para quem é esse perfume especial?</h2>
+            
+            <div class="options single-column">
+                <button class="option" onclick="selectOption('step1', 'para-mim', this)">
+                    <span class="option-emoji">💕</span>
+                    <strong>É para mim!</strong>
+                </button>
+                <button class="option" onclick="selectOption('step1', 'para-presentear', this)">
+                    <span class="option-emoji">🎁</span>
+                    <strong>É para presentear alguém especial!</strong>
+                </button>
+            </div>
+            
+            <button class="btn" onclick="nextStep('step2')" disabled id="btn-step1">Próxima Pergunta ✨</button>
+        </div>
+
+        <!-- PERGUNTA 2: TIPO DE PERFUMARIA -->
+        <div class="step hidden" id="step2">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 33%"></div>
+            </div>
+            
+            <h2 id="question2-title">Qual tipo de perfumaria combina mais com você?</h2>
+            
+            <div class="options three-columns">
+                <button class="option" onclick="selectOption('step2', 'unissex', this)">
+                    <span class="option-emoji">🌟</span>
+                    <strong>Unissex</strong>
+                </button>
+                <button class="option" onclick="selectOption('step2', 'feminina', this)">
+                    <span class="option-emoji">🌸</span>
+                    <strong>Feminina</strong>
+                </button>
+                <button class="option" onclick="selectOption('step2', 'masculina', this)">
+                    <span class="option-emoji">⚡</span>
+                    <strong>Masculina</strong>
+                </button>
+            </div>
+            
+            <button class="btn" onclick="nextStep('step3')" disabled id="btn-step2">Próxima Pergunta ✨</button>
+        </div>
+
+        <!-- PERGUNTA 3: INTENSIDADE -->
+        <div class="step hidden" id="step3">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 50%"></div>
+            </div>
+            
+            <h2>Que tipo de intensidade você está buscando?</h2>
+            
+            <div class="options two-columns">
+                <button class="option" onclick="selectOption('step3', 'sutil', this)">
+                    <span class="option-emoji">🌸</span>
+                    <strong>Sutil</strong>
+                </button>
+                <button class="option" onclick="selectOption('step3', 'marcante', this)">
+                    <span class="option-emoji">💎</span>
+                    <strong>Marcante</strong>
+                </button>
+                <button class="option" onclick="selectOption('step3', 'muito-intenso', this)">
+                    <span class="option-emoji">🔥</span>
+                    <strong>Muito Intenso</strong>
+                </button>
+                <button class="option" onclick="selectOption('step3', 'nao-sei', this)">
+                    <span class="option-emoji">🤔</span>
+                    <strong>Não sei ainda... me ajuda a descobrir!</strong>
+                </button>
+            </div>
+            
+            <button class="btn" onclick="nextStep('step4')" disabled id="btn-step3">Próxima Pergunta ✨</button>
+        </div>
+
+        <!-- PERGUNTA 4: FAMÍLIAS OLFATIVAS -->
+        <div class="step hidden" id="step4">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 66%"></div>
+            </div>
+            
+            <h2>Qual dessas famílias de fragâncias mais desperta sua curiosidade?</h2>
+            <div class="question">Você pode escolher até 3 opções! ✨</div>
+            
+            <div class="options two-columns">
+                <button class="option" onclick="selectMultipleOptions('step4', 'florais', this, 3)">
+                    <span class="option-emoji">🌸</span>
+                    <strong>Florais</strong>
+                </button>
+                <button class="option" onclick="selectMultipleOptions('step4', 'frutais', this, 3)">
+                    <span class="option-emoji">🍑</span>
+                    <strong>Frutais</strong>
+                </button>
+                <button class="option" onclick="selectMultipleOptions('step4', 'frescos', this, 3)">
+                    <span class="option-emoji">🌿</span>
+                    <strong>Frescos & Aromáticos</strong>
+                </button>
+                <button class="option" onclick="selectMultipleOptions('step4', 'adocicados', this, 3)">
+                    <span class="option-emoji">🍯</span>
+                    <strong>Adocicados</strong>
+                </button>
+                <button class="option" onclick="selectMultipleOptions('step4', 'amadeirados', this, 3)">
+                    <span class="option-emoji">🌲</span>
+                    <strong>Amadeirados</strong>
+                </button>
+                <button class="option" onclick="selectOption('step4', 'nao-sei-familia', this)">
+                    <span class="option-emoji">🤔</span>
+                    <strong>Não sei... me ajuda a descobrir!</strong>
+                </button>
+            </div>
+            
+            <button class="btn" onclick="nextStep('step5')" disabled id="btn-step4">Próxima Pergunta ✨</button>
+        </div>
+
+        <!-- PERGUNTA 5: CARACTERÍSTICAS -->
+        <div class="step hidden" id="step5">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 83%"></div>
+            </div>
+            
+            <h2>Como você quer que as pessoas se sintam quando perceberem seu perfume?</h2>
+            <div class="question">Você pode escolher até 3 opções! ✨</div>
+            
+            <div class="options two-columns">
+                <button class="option" onclick="selectMultipleOptions('step5', 'delicados', this, 3)">
+                    <span class="option-emoji">✨</span>
+                    <strong>Delicados</strong>
+                </button>
+                <button class="option" onclick="selectMultipleOptions('step5', 'vibrantes', this, 3)">
+                    <span class="option-emoji">🎉</span>
+                    <strong>Vibrantes</strong>
+                </button>
+                <button class="option" onclick="selectMultipleOptions('step5', 'luminosos', this, 3)">
+                    <span class="option-emoji">☀️</span>
+                    <strong>Luminosos</strong>
+                </button>
+                <button class="option" onclick="selectMultipleOptions('step5', 'sofisticados', this, 3)">
+                    <span class="option-emoji">👑</span>
+                    <strong>Sofisticados</strong>
+                </button>
+                <button class="option" onclick="selectMultipleOptions('step5', 'envolventes', this, 3)">
+                    <span class="option-emoji">🌙</span>
+                    <strong>Envolventes</strong>
+                </button>
+                <button class="option" onclick="selectMultipleOptions('step5', 'ousados', this, 3)">
+                    <span class="option-emoji">🔥</span>
+                    <strong>Ousados</strong>
+                </button>
+                <button class="option" onclick="selectOption('step5', 'nao-sei-carac', this)">
+                    <span class="option-emoji">🤔</span>
+                    <strong>Não sei... me ajuda a descobrir!</strong>
+                </button>
+            </div>
+            
+            <button class="btn" onclick="nextStep('step6')" disabled id="btn-step5">Última Pergunta ✨</button>
+        </div>
+
+        <!-- PERGUNTA 6: PERFUMES DE REFERÊNCIA -->
+        <div class="step hidden" id="step6">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%"></div>
+            </div>
+            
+            <h2>Qual desses perfumes famosos mais combina com seu estilo?</h2>
+            
+            <div class="options two-columns">
+                <button class="option" onclick="selectOption('step6', 'sauvage', this)">
+                    <span class="option-emoji">💙</span>
+                    <strong>Sauvage EDT - Dior</strong>
+                </button>
+                <button class="option" onclick="selectOption('step6', 'y-parfum', this)">
+                    <span class="option-emoji">⚡</span>
+                    <strong>Y Le Parfum</strong>
+                </button>
+                <button class="option" onclick="selectOption('step6', 'burberry-hero', this)">
+                    <span class="option-emoji">🌿</span>
+                    <strong>Burberry Hero</strong>
+                </button>
+                <button class="option" onclick="selectOption('step6', 'good-girl-blush', this)">
+                    <span class="option-emoji">🌸</span>
+                    <strong>Good Girl Blush</strong>
+                </button>
+                <button class="option" onclick="selectOption('step6', 'prada-paradoxe', this)">
+                    <span class="option-emoji">💎</span>
+                    <strong>Prada Paradoxe</strong>
+                </button>
+                <button class="option" onclick="selectOption('step6', 'burberry-goddess', this)">
+                    <span class="option-emoji">🌺</span>
+                    <strong>Burberry Goddess</strong>
+                </button>
+                <button class="option" onclick="selectOption('step6', 'imagination', this)">
+                    <span class="option-emoji">✨</span>
+                    <strong>Imagination - Louis Vuitton</strong>
+                </button>
+                <button class="option" onclick="selectOption('step6', 'club-nuit', this)">
+                    <span class="option-emoji">🌙</span>
+                    <strong>Club Nuit Intense</strong>
+                </button>
+                <button class="option" onclick="selectOption('step6', 'nao-sei-perfume', this)">
+                    <span class="option-emoji">🤔</span>
+                    <strong>Nenhum desses... me ajuda a descobrir!</strong>
+                </button>
+            </div>
+            
+            <button class="btn" onclick="showResult()" disabled id="btn-step6">Ver Minha Recomendação! 🎉</button>
+        </div>
+
+        <!-- RESULTADO -->
+        <div class="step hidden" id="result">
+            <div class="result">
+                <h3>🎉 Sua Recomendação Personalizada!</h3>
+                <div id="match-result"></div>
+                
+                <button class="btn" onclick="contactWhatsApp()" style="margin-top: 30px;">
+                    Falar com Consultora 📱
+                </button>
+                <button class="btn" onclick="restart()" style="background: linear-gradient(135deg, #8e24aa 0%, #ab47bc 100%); margin-top: 15px;">
+                    Fazer Novamente 🔄
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userData = {
+            paraQuem: '',
+            tipoPerfumaria: '',
+            intensidade: '',
+            familiaOlfativa: [],
+            caracteristicas: [],
+            perfumeReferencia: '',
+            timestamp: new Date().toISOString()
+        };
+
+        const catalogoPhyto = {
+            'WILD LIFE': {
+                variante: 'MASCULINO',
+                nome: 'Wild Life',
+                inspiracao: 'Sauvage EDT (2015) - Dior',
+                cor: 'Azul Marinho',
+                classe: 'FRESCOR & AROMATICOS',
+                subclasse: 'OUSADO',
+                familia: 'Fougère Aromatic Woody',
+                topo: 'Lavanda, Bergamota, Pimenta Preta',
+                corpo: 'Gerânio, Patchouli, Sálvia',
+                fundo: 'Âmbar, Tonka, Cedro'
+            },
+            'MIDNIGHT': {
+                variante: 'MASCULINO',
+                nome: 'Midnight',
+                inspiracao: 'Y Le Parfum (2021) - YSL',
+                cor: 'Preto',
+                classe: 'ADOCICADO',
+                subclasse: 'SOFISTICADO',
+                familia: 'Oriental Fougere Woody',
+                topo: 'Sálvia, Gengibre, Grapefruit',
+                corpo: 'Gerânio, Lavanda, Olíbano',
+                fundo: 'Tonka, Patchouli, Âmbar'
+            },
+            'VORTEX': {
+                variante: 'MASCULINO',
+                nome: 'Vortex',
+                inspiracao: 'Burberry Hero (2021) - Burberry',
+                cor: 'Marrom',
+                classe: 'AMADEIRADO',
+                subclasse: 'SOFISTICADO',
+                familia: 'Woody Aromatic Ambery',
+                topo: 'Bergamota, Alecrim, Zimbro',
+                corpo: 'Cardamomo, Pimenta, Cedro',
+                fundo: 'Patchouli, Vetiver, Musgo'
+            },
+            'SALOON': {
+                variante: 'MASCULINO',
+                nome: 'Saloon',
+                inspiracao: 'Club Nuit Intense (2015) - Armaf',
+                cor: 'Prata',
+                classe: 'AMADEIRADO',
+                subclasse: 'ENVOLVENTE',
+                familia: 'Woody Spicy Citrus',
+                topo: 'Limão Siciliano, Abacaxi, Gengibre',
+                corpo: 'Vidoeiro, Jasmim, Patchouli',
+                fundo: 'Âmbar Cinzento, Baunilha, Couro'
+            },
+            'BLUSH GIRL': {
+                variante: 'FEMININO',
+                nome: 'Blush Girl',
+                inspiracao: 'Good Girl Blush (2023) - CH',
+                cor: 'Rosa Claro',
+                classe: 'FLORAIS',
+                subclasse: 'DELICADO',
+                familia: 'Chypre Floral',
+                topo: 'Bergamota, Amêndoas',
+                corpo: 'Peônia, Ylang Ylang',
+                fundo: 'Baunilha, Fava Tonka'
+            },
+            'CONTRADICTION': {
+                variante: 'FEMININO',
+                nome: 'Contradiction',
+                inspiracao: 'Prada Paradoxe (2022) - Prada',
+                cor: 'Salmão',
+                classe: 'FLORAIS',
+                subclasse: 'LUMINOSOS',
+                familia: 'Oriental Floral Âmbar',
+                topo: 'Pêra, Grapefruit, Bergamota',
+                corpo: 'Flor de Laranjeira, Jasmim, Tuberosa',
+                fundo: 'Baunilha, Âmbar, Musk'
+            },
+            'CELESTIAL': {
+                variante: 'FEMININO',
+                nome: 'Celestial',
+                inspiracao: 'Goddess (2023) - Burberry',
+                cor: 'Roxo',
+                classe: 'ADOCICADO',
+                subclasse: 'VIBRANTE',
+                familia: 'Oriental Floral Gourmand',
+                topo: 'Bergamota, Lavanda, Neroli',
+                corpo: 'Cacau, Tuberosa, Jasmim',
+                fundo: 'Baunilha, Sândalo, Fava Tonka'
+            },
+            'MARSHMELT': {
+                variante: 'FEMININO',
+                nome: 'Marshmelt',
+                inspiracao: 'YUM',
+                cor: 'Branco',
+                classe: 'ADOCICADOS',
+                subclasse: 'ENVOLVENTE',
+                familia: 'Oriental Fruity Gourmand',
+                topo: 'Morango, Red Berry, Bergamota',
+                corpo: 'Framboesa, Jasmim, Caramelo',
+                fundo: 'Marshmallow, Baunilha, Âmbar'
+            },
+            'CREATION': {
+                variante: 'UNISSEX',
+                nome: 'Creation',
+                inspiracao: 'Imagination (2021) - Louis Vuitton',
+                cor: 'Azul Claro',
+                classe: 'FRESCOR & AROMATICOS',
+                subclasse: 'VIBRANTE',
+                familia: 'Citrus Spicy Aromatic',
+                topo: 'Bergamota, Citron, Gengibre',
+                corpo: 'Petit Grain, Chá Verde, Incenso',
+                fundo: 'Guaiaco, Âmbar, Musk'
+            },
+            'AMBER VICE': {
+                variante: 'UNISSEX',
+                nome: 'Amber Vice',
+                inspiracao: 'Angel\'s Share - Kilian',
+                cor: 'Âmbar',
+                classe: 'ADOCICADO',
+                subclasse: 'OUSADOS',
+                familia: 'Oriental Woody Spicy',
+                topo: 'Conhaque, Amêndoas, Canela',
+                corpo: 'Jasmim, Davana, Cedro',
+                fundo: 'Âmbar, Sândalo, Baunilha'
+            }
+        };
+
+        function startQuiz() {
+            document.getElementById('welcome').classList.add('hidden');
+            document.getElementById('step1').classList.remove('hidden');
+        }
+
+        function selectMultipleOptions(step, value, element, maxSelections) {
+            const isSelected = element.classList.contains('selected');
+            
+            if (isSelected) {
+                element.classList.remove('selected');
+                if (step === 'step4') {
+                    userData.familiaOlfativa = userData.familiaOlfativa.filter(item => item !== value);
+                } else if (step === 'step5') {
+                    userData.caracteristicas = userData.caracteristicas.filter(item => item !== value);
+                }
+            } else {
+                const currentSelections = element.parentNode.querySelectorAll('.option.selected:not([onclick*="nao-sei"])').length;
+                
+                if (currentSelections < maxSelections) {
+                    element.classList.add('selected');
+                    if (step === 'step4') {
+                        userData.familiaOlfativa.push(value);
+                    } else if (step === 'step5') {
+                        userData.caracteristicas.push(value);
+                    }
+                } else {
+                    alert(`Você pode escolher no máximo ${maxSelections} opções!`);
+                    return;
+                }
+            }
+            
+            const hasSelections = element.parentNode.querySelectorAll('.option.selected').length > 0;
+            document.getElementById('btn-' + step).disabled = !hasSelections;
+        }
+
+        function selectOption(step, value, element) {
+            const options = element.parentNode.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            element.classList.add('selected');
+            
+            if (step === 'step1') {
+                userData.paraQuem = value;
+                updateStep2Title();
+            } else if (step === 'step2') {
+                userData.tipoPerfumaria = value;
+            } else if (step === 'step3') {
+                userData.intensidade = value;
+            } else if (step === 'step4') {
+                userData.familiaOlfativa = [value];
+            } else if (step === 'step5') {
+                userData.caracteristicas = [value];
+            } else if (step === 'step6') {
+                userData.perfumeReferencia = value;
+            }
+            
+            document.getElementById('btn-' + step).disabled = false;
+        }
+
+        function updateStep2Title() {
+            const title = document.getElementById('question2-title');
+            if (userData.paraQuem === 'para-presentear') {
+                title.textContent = 'Que tipo de perfumaria você quer dar de presente?';
+            } else {
+                title.textContent = 'Qual tipo de perfumaria combina mais com você?';
+            }
+        }
+
+        function nextStep(nextStepId) {
+            const currentStep = document.querySelector('.step:not(.hidden)');
+            currentStep.classList.add('hidden');
+            document.getElementById(nextStepId).classList.remove('hidden');
+        }
+
+        function showResult() {
+            const currentStep = document.querySelector('.step:not(.hidden)');
+            currentStep.classList.add('hidden');
+            document.getElementById('result').classList.remove('hidden');
+            
+            const recommendation = generateRecommendation();
+            document.getElementById('match-result').innerHTML = recommendation;
+            
+            console.log('Dados do usuário:', userData);
+            localStorage.setItem('phytoQuizData', JSON.stringify(userData));
+        }
+
+        function generateRecommendation() {
+            const scores = {};
+            
+            Object.keys(catalogoPhyto).forEach(key => {
+                scores[key] = 0;
+            });
+
+            Object.keys(catalogoPhyto).forEach(key => {
+                const perfume = catalogoPhyto[key];
+                
+                let varianteMatch = false;
+                if (userData.tipoPerfumaria === 'masculina' && perfume.variante === 'MASCULINO') varianteMatch = true;
+                if (userData.tipoPerfumaria === 'feminina' && perfume.variante === 'FEMININO') varianteMatch = true;
+                if (userData.tipoPerfumaria === 'unissex' && perfume.variante === 'UNISSEX') varianteMatch = true;
+                
+                if (!varianteMatch) {
+                    scores[key] = -100;
+                    return;
+                }
+                
+                scores[key] += 10;
+                
+                userData.familiaOlfativa.forEach(familia => {
+                    if (familia === 'florais' && perfume.classe === 'FLORAIS') scores[key] += 15;
+                    if (familia === 'frescos' && perfume.classe === 'FRESCOR & AROMATICOS') scores[key] += 15;
+                    if (familia === 'adocicados' && (perfume.classe === 'ADOCICADO' || perfume.classe === 'ADOCICADOS')) scores[key] += 15;
+                    if (familia === 'amadeirados' && perfume.classe === 'AMADEIRADO') scores[key] += 15;
+                    if (familia === 'frutais' && perfume.classe === 'ADOCICADOS') scores[key] += 15;
+                });
+                
+                userData.caracteristicas.forEach(caracteristica => {
+                    if (caracteristica === 'delicados' && perfume.subclasse === 'DELICADO') scores[key] += 20;
+                    if (caracteristica === 'vibrantes' && perfume.subclasse === 'VIBRANTE') scores[key] += 20;
+                    if (caracteristica === 'luminosos' && perfume.subclasse === 'LUMINOSOS') scores[key] += 20;
+                    if (caracteristica === 'sofisticados' && perfume.subclasse === 'SOFISTICADO') scores[key] += 20;
+                    if (caracteristica === 'envolventes' && perfume.subclasse === 'ENVOLVENTE') scores[key] += 20;
+                    if (caracteristica === 'ousados' && (perfume.subclasse === 'OUSADO' || perfume.subclasse === 'OUSADOS')) scores[key] += 20;
+                });
+
+                if (userData.intensidade === 'sutil' && perfume.subclasse === 'DELICADO') scores[key] += 20;
+                if (userData.intensidade === 'marcante' && (perfume.subclasse === 'SOFISTICADO' || perfume.subclasse === 'LUMINOSOS' || perfume.subclasse === 'VIBRANTE')) scores[key] += 20;
+                if (userData.intensidade === 'muito-intenso' && (perfume.subclasse === 'OUSADO' || perfume.subclasse === 'OUSADOS' || perfume.subclasse === 'ENVOLVENTE')) scores[key] += 20;
+                
+                if (userData.perfumeReferencia === 'sauvage' && perfume.nome === 'Wild Life') scores[key] += 25;
+                if (userData.perfumeReferencia === 'y-parfum' && perfume.nome === 'Midnight') scores[key] += 25;
+                if (userData.perfumeReferencia === 'burberry-hero' && perfume.nome === 'Vortex') scores[key] += 25;
+                if (userData.perfumeReferencia === 'good-girl-blush' && perfume.nome === 'Blush Girl') scores[key] += 25;
+                if (userData.perfumeReferencia === 'prada-paradoxe' && perfume.nome === 'Contradiction') scores[key] += 25;
+                if (userData.perfumeReferencia === 'burberry-goddess' && perfume.nome === 'Celestial') scores[key] += 25;
+                if (userData.perfumeReferencia === 'imagination' && perfume.nome === 'Creation') scores[key] += 25;
+                if (userData.perfumeReferencia === 'club-nuit' && perfume.nome === 'Saloon') scores[key] += 25;
+            });
+
+            const sortedPerfumes = Object.keys(scores)
+                .filter(key => scores[key] > 0)
+                .sort((a, b) => scores[b] - scores[a]);
+
+            if (sortedPerfumes.length === 0) {
+                return `
+                    <div class="perfume-card">
+                        <div class="perfume-name">Ops! Não encontramos um match perfeito</div>
+                        <p>Mas nossa consultora especializada vai te ajudar a encontrar o perfume ideal para seu perfil!</p>
+                    </div>
+                `;
+            }
+
+            const mainPerfume = catalogoPhyto[sortedPerfumes[0]];
+
+            let html = `
+                <div class="match-percentage">🌟 Sua fragrância mais recomendada!</div>
+                
+                <div class="perfume-card">
+                    <div class="perfume-name">${mainPerfume.nome}</div>
+                    <div class="perfume-inspiration">Inspirado em ${mainPerfume.inspiracao}</div>
+                    <div class="perfume-family">🌸 ${mainPerfume.familia}</div>
+                    
+                    <div class="perfume-notes">
+                        <div class="notes-section">
+                            <span class="notes-label">Topo:</span>
+                            <span class="notes-content">${mainPerfume.topo}</span>
+                        </div>
+                        <div class="notes-section">
+                            <span class="notes-label">Corpo:</span>
+                            <span class="notes-content">${mainPerfume.corpo}</span>
+                        </div>
+                        <div class="notes-section">
+                            <span class="notes-label">Fundo:</span>
+                            <span class="notes-content">${mainPerfume.fundo}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="color: #8e24aa; font-weight: 600;">
+                        💡 Personalidade: ${mainPerfume.subclasse} | 🎨 Cor: ${mainPerfume.cor}
+                    </div>
+                </div>
+            `;
+
+            if (sortedPerfumes.length > 1) {
+                html += '<div class="alternatives"><h4 style="color: #8e24aa; margin-bottom: 20px; font-size: 1.4rem;">💎 Outras opções para você:</h4>';
+                
+                for (let i = 1; i < Math.min(3, sortedPerfumes.length); i++) {
+                    const altPerfume = catalogoPhyto[sortedPerfumes[i]];
+                    
+                    html += `
+                        <div class="alternative-card">
+                            <div class="alternative-name">${altPerfume.nome}</div>
+                            <div class="alternative-match">Também recomendado | Inspirado em ${altPerfume.inspiracao}</div>
+                        </div>
+                    `;
+                }
+                html += '</div>';
+            }
+
+            return html;
+        }
+
+        function contactWhatsApp() {
+            const message = `Olá! Acabei de fazer o quiz da Phyto Parfums! 🌟
+
+Meu perfil:
+• ${userData.paraQuem === 'para-mim' ? 'Para mim' : 'Para presentear'}
+• Tipo: ${userData.tipoPerfumaria}
+• Intensidade: ${userData.intensidade}
+• Família: ${userData.familiaOlfativa.join(', ')}
+• Características: ${userData.caracteristicas.join(', ')}
+• Referência: ${userData.perfumeReferencia}
+
+Gostaria de saber mais e solicitar o teste grátis! 💕`;
+            
+            const whatsappUrl = `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function restart() {
+            userData = { 
+                paraQuem: '', 
+                tipoPerfumaria: '', 
+                intensidade: '', 
+                familiaOlfativa: [], 
+                caracteristicas: [], 
+                perfumeReferencia: '', 
+                timestamp: new Date().toISOString() 
+            };
+            
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('welcome').classList.remove('hidden');
+            
+            document.querySelectorAll('.btn').forEach(btn => {
+                if (btn.id && btn.id.startsWith('btn-')) btn.disabled = true;
+            });
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+        }
+    </script>
+</body>
+</html>
